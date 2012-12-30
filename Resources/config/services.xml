@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="vmelnik_secure_form.class">VMelnik\SecureFormBundle\Form\Type\SecureFormExtension</parameter>
+        <parameter key="vmelnik_secure_form_field.class">VMelnik\SecureFormBundle\Form\Type\SecureFieldExtension</parameter>
+        <parameter key="vmelnik_secure_form_config.class">VMelnik\SecureFormBundle\Config\ExtensionConfig</parameter>
+    </parameters> 
+    
+    <services>
+        
+        <!-- Form type extension config for secure forms -->
+        <service id="vmelnik.form.type.secure_extension_config" class="%vmelnik_secure_form_config.class%">
+            <argument>%vmelnik_secure_form%</argument>
+        </service>
+        
+        <!-- Field level extension for secure forms -->
+        <service id="vmelnik.form.type.secure_field_extension" class="%vmelik_secure_form_field.class%">
+            <argument type="service" id="vmelik.form.type.secure_extension_config" />
+            <tag name="form.type_extension" alias="field" />
+        </service>
+        
+        <!-- Form level extension for secure forms -->
+        <service id="vmelnik.form.type.secure_extension" class="%vmelnik_secure_form.class%">
+            <argument type="service" id="vmelnik.form.type.secure_extension_config" />
+            <tag name="form.type_extension" alias="form" />
+        </service>
+    </services>
+    
+</container>
