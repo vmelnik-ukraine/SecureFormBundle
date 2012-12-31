@@ -18,8 +18,8 @@
         </service>
         
         <!-- Field level extension for secure forms -->
-        <service id="vmelnik.form.type.secure_field_extension" class="%vmelik_secure_form_field.class%">
-            <argument type="service" id="vmelik.form.type.secure_extension_config" />
+        <service id="vmelnik.form.type.secure_field_extension" class="%vmelnik_secure_form_field.class%">
+            <argument type="service" id="vmelnik.form.type.secure_extension_config" />
             <tag name="form.type_extension" alias="field" />
         </service>
         

@@ -2,11 +2,12 @@
 
 namespace VMelnik\SecureFormBundle\Form\Type;
 
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\FormEvents;
 use VMelnik\SecureFormBundle\Form\Event\SecureFormListener;
 use VMelnik\SecureFormBundle\Config\ExtensionConfig;
-use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\Form\FormEvents;
 
 /**
  * Secure form type extension
@@ -36,10 +37,10 @@ class SecureFormExtension extends AbstractTypeExtension
     /**
      * Adds secure filters to form
      *
-     * @param FormBuilder $builder The form builder
+     * @param FormBuilderInterface $builder The form builder
      * @param array       $options The options
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // validation disabled
         if (!$options[$this->config->getEnabledOptionName()]) {
@@ -66,13 +67,13 @@ class SecureFormExtension extends AbstractTypeExtension
     /**
      * {@inheritDoc}
      */
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             $this->config->getEnabledOptionName() => $this->config->isEnabled(),
             $this->config->getSsvStripTagsOptionName() => $this->config->isSsvStripTagsEnabled(),
             $this->config->getIgnoreFieldsOptionName() => array(),
-        );
+        ));
     }
 
     /**

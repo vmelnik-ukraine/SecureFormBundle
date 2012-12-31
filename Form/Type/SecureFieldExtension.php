@@ -3,8 +3,9 @@
 namespace VMelnik\SecureFormBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use VMelnik\SecureFormBundle\Config\ExtensionConfig;
-use Symfony\Component\Form\FormBuilder;
 
 /**
  * Secure form field level type extension
@@ -34,10 +35,10 @@ class SecureFieldExtension extends AbstractTypeExtension
     /**
      * Adds client side validation
      *
-     * @param FormBuilder $builder The form builder
+     * @param FormBuilderInterface $builder The form builder
      * @param array       $options The options
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // globally disabled
         if (!$options[$this->config->getEnabledOptionName()]) {
@@ -70,15 +71,15 @@ class SecureFieldExtension extends AbstractTypeExtension
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             $this->config->getEnabledOptionName() => $this->config->isEnabled(),
             $this->config->getCsvOptionName() => $this->config->isCsvEnabled(),
             $this->config->getIgnoreFieldsOptionName() => array(),
-        );
+        ));
     }
 
     /**
